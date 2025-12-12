@@ -71,6 +71,7 @@ Centro de datos que almacena:
 ### Diálogos (7 archivos)
 - **DialogoConsultarTelefono**: Ver detalles de un teléfono
 - **DialogoListarTelefonos**: Mostrar reporte de todos los teléfonos
+	- **Actualización importante**: `DialogoListarTelefonos` ahora incluye un selector de orden (`JComboBox`) que permite ordenar la lista por: `Precio (Mayor → Menor)`, `Precio (Menor → Mayor)` y `Marca (A → Z)` sin modificar `DatosGlobales`.
 - **DialogoModificarTelefono**: Editar atributos de un teléfono
 - **DialogoVender**: Procesar venta y generar boleta
 - **DialogoConfigurarDescuentos**: Ajustar porcentajes de descuento
@@ -118,6 +119,11 @@ Nota: Estas advertencias son no-críticas y se producen porque algunos métodos 
 - ✅ Restaurado comportamiento de tecla `Escape` en diálogos (cierra con ESC)
 - ✅ Actualizado `README.md` e `INFORME_PROYECTO.md`
 
+## Cambios recientes (11/12/2025)
+- ✅ Añadido selector de orden en `DialogoListarTelefonos` con opciones: `Original`, `Precio (Mayor → Menor)`, `Precio (Menor → Mayor)`, `Marca (A → Z)`.
+- ✅ Implementada la lógica de ordenación local en el diálogo (no se modificó `DatosGlobales`).
+
+
 ## Autores
 - Nayeli Bianca Clemente Morales
 - Milagros Eugenia Loza Cavero
@@ -126,4 +132,4 @@ Nota: Estas advertencias son no-críticas y se producen porque algunos métodos 
 - Carlos Eduardo Saavedra Alvarado
 
 ---
-**Última actualización**: 24 de noviembre de 2025
+**Última actualización**: 11 de diciembre de 2025

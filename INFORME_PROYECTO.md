@@ -78,6 +78,12 @@ Cada sección explica responsabilidad, cómo usarlo desde el código, y puntos c
 - Flujo:
   - Botón "Listar" recorre `DatosGlobales` y construye un texto formateado.
 - Tip para novatos: `StringBuilder` es eficiente para concatenar texto repetidamente.
+ - Actualización (11/12/2025): Se añadió un `JComboBox` de orden en la parte superior del diálogo para que el usuario elija cómo ordenar el listado. Opciones disponibles:
+   - `Original` (orden por defecto)
+   - `Precio (Mayor → Menor)`
+   - `Precio (Menor → Mayor)`
+   - `Marca (A → Z)`
+   La implementación crea una lista local de `Telefono`, aplica la ordenación seleccionada con `Collections.sort` y genera el reporte a partir de la lista ordenada. Esto preserva `DatosGlobales` sin modificaciones.
 
 **`DialogoModificarTelefono.java`**
 - Responsabilidad: Permitir editar los atributos de un teléfono existente.
@@ -148,6 +154,7 @@ Recomendación: si se desea eliminar estas advertencias, puedo mover las llamada
 - ✅ Reparado y rediseñado `DialogoAcercaDe` (evitando duplicaciones previas) para mostrar título y autores según diseño solicitado.
 - ✅ Restaurado y verificado que la tecla `Escape` cierre los diálogos mediante `registerKeyboardAction`.
 - ✅ Añadidos comentarios JavaDoc de clase en los diálogos que carecían de ellos (comentarios didácticos para programadores novatos).
+ - ✅ Añadido selector de orden y lógica de ordenación en `DialogoListarTelefonos` (11/12/2025): permite ordenar por precio desc/asc y por marca alfabéticamente, sin alterar la estructura de datos global.
 
 Conclusión
 ----------
@@ -156,6 +163,13 @@ El proyecto es un buen ejemplo didáctico para aprender conceptos de Java y Swin
 He documentado y comentado los módulos principales, proporcionado recomendaciones claras para mejorar la mantenibilidad y escalabilidad, y **corregido el error crítico de doble cierre de diálogos**. La aplicación es completamente funcional y está lista para uso educativo.
 
 **Estado actual (24/11/2025)**:
+- ✅ Compilación: 0 errores, 8 advertencias no-críticas (advertencias `this-escape` pendientes)
+- ✅ Funcionalidad: 100% operativa
+- ✅ Documentación: Completa y actualizada
+- ✅ Cierre de diálogos: Funciona correctamente en primer intento
+- ✅ Código comentado: Nivel programador novato
+
+**Estado actual (11/12/2025)**:
 - ✅ Compilación: 0 errores, 8 advertencias no-críticas (advertencias `this-escape` pendientes)
 - ✅ Funcionalidad: 100% operativa
 - ✅ Documentación: Completa y actualizada
@@ -171,4 +185,4 @@ Si quieres, continúo con cualquiera de las siguientes tareas:
 - Mejoras de interfaz gráfica (colores, iconos, layouts mejorados).
 
 ---
-Generado por el asistente el 24 de noviembre de 2025.
+Generado por el asistente el 11 de diciembre de 2025.

@@ -2,6 +2,7 @@ package tienda;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 
 /**
  * DialogoListarTelefonos - Muestra un reporte con todos los teléfonos
@@ -14,6 +15,7 @@ public class DialogoListarTelefonos extends JDialog {
     private JTextArea areaTexto;
     private JButton btnListar;
     private JButton btnCerrar;
+    private JComboBox<String> comboOrden;
     
     public DialogoListarTelefonos(JFrame padre) {
         super(padre, "Listar Teléfonos Móviles", true);
@@ -31,6 +33,17 @@ public class DialogoListarTelefonos extends JDialog {
     
     private void crearComponentes() {
         JPanel panelPrincipal = new JPanel(new BorderLayout());
+        
+        // Panel superior con selector de orden
+        JPanel panelTop = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        JLabel lblOrden = new JLabel("Orden:");
+        lblOrden.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        comboOrden = new JComboBox<>(new String[] {"Original", "Precio (Mayor → Menor)", "Precio (Menor → Mayor)", "Marca (A → Z)"});
+        comboOrden.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        comboOrden.addActionListener(e -> generarReporte());
+        panelTop.add(lblOrden);
+        panelTop.add(comboOrden);
+        panelPrincipal.add(panelTop, BorderLayout.NORTH);
         
         // Área de texto con scroll
         areaTexto = new JTextArea();
@@ -72,8 +85,40 @@ public class DialogoListarTelefonos extends JDialog {
         if (DatosGlobales.getCantidadTelefonos() == 0) {
             reporte.append("No hay teléfonos registrados.\n");
         } else {
+            // Construir lista local de teléfonos para poder ordenar sin modificar DatosGlobales
+            java.util.List<Telefono> lista = new java.util.ArrayList<>();
             for (int i = 0; i < DatosGlobales.getCantidadTelefonos(); i++) {
-                Telefono tel = DatosGlobales.getTelefono(i);
+                lista.add(DatosGlobales.getTelefono(i));
+            }
+
+            // Aplicar orden según selección del combo (si existe)
+            if (comboOrden != null) {
+                String opcion = (String) comboOrden.getSelectedItem();
+                if ("Precio (Mayor → Menor)".equals(opcion)) {
+                    Collections.sort(lista, new Comparator<Telefono>() {
+                        public int compare(Telefono a, Telefono b) {
+                            // ordenar por precio descendente
+                            return Double.compare(b.getPrecio(), a.getPrecio());
+                        }
+                    });
+                } else if ("Precio (Menor → Mayor)".equals(opcion)) {
+                    Collections.sort(lista, new Comparator<Telefono>() {
+                        public int compare(Telefono a, Telefono b) {
+                            // ordenar por precio ascendente
+                            return Double.compare(a.getPrecio(), b.getPrecio());
+                        }
+                    });
+                } else if ("Marca (A → Z)".equals(opcion)) {
+                    Collections.sort(lista, new Comparator<Telefono>() {
+                        public int compare(Telefono a, Telefono b) {
+                            return a.getMarca().compareToIgnoreCase(b.getMarca());
+                        }
+                    });
+                }
+            }
+
+            for (int i = 0; i < lista.size(); i++) {
+                Telefono tel = lista.get(i);
                 reporte.append("TELÉFONO #").append(i + 1).append("\n");
                 reporte.append("─────────────────────────────────────────\n");
                 reporte.append("Marca: ").append(tel.getMarca()).append("\n");
