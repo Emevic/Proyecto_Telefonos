@@ -11,27 +11,50 @@ import java.awt.*;
  */
 public class DialogoModificarTelefono extends JDialog {
     private static final long serialVersionUID = 1L;
+    
+    // Componentes para edición gráfica
+    private JPanel panelPrincipal;
+    private JLabel lblModelo;
     private JComboBox<String> comboModelos;
+    private JLabel lblMarca;
     private JTextField txtMarca;
+    private JLabel lblModelo2;
     private JTextField txtModelo;
+    private JLabel lblColor;
     private JTextField txtColor;
-    private JTextField txtCamara;
-    private JTextField txtCamaraFrontal;
+    private JLabel lblProcesador;
     private JTextField txtProcesador;
+    private JLabel lblPantalla;
     private JTextField txtPantalla;
+    private JLabel lblPeso;
     private JTextField txtPeso;
+    private JLabel lblCamara;
+    private JTextField txtCamara;
+    private JLabel lblCamaraFrontal;
+    private JTextField txtCamaraFrontal;
+    private JLabel lblSO;
     private JTextField txtSO;
+    private JLabel lblAlmacenamiento;
     private JTextField txtAlmacenamiento;
-    private JTextField txtPrecio;
+    private JLabel lblMemoria;
     private JTextField txtMemoria;
+    private JLabel lblPrecio;
+    private JTextField txtPrecio;
+    private JLabel lblMedidas;
     private JTextField txtMedidas;
+    private JLabel lblPlan;
     private JTextField txtPlan;
     private JButton btnGuardar;
     private JButton btnCerrar;
     private int indiceActual = -1;
     
+    /**
+     * Constructor que crea el diálogo para modificar los datos de un teléfono existente.
+     * Inicializa la interfaz con un combo para seleccionar el modelo y campos editables para cada atributo.
+     * @param padre La ventana principal (JFrame) que es el padre de este diálogo modal.
+     */
     public DialogoModificarTelefono(JFrame padre) {
-        super(padre, "Modificar Teléfono Móvil", true);
+        super(padre, "Modificar Tel\u00E9fono M\u00F3vil", true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(650, 650);
         setLocationRelativeTo(padre);
@@ -50,109 +73,209 @@ public class DialogoModificarTelefono extends JDialog {
     }
     
     private void crearComponentes() {
-        JPanel panelPrincipal = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 12, 8, 12);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        // Estética: fuentes y fondo
-        Font labelFont = new Font("Segoe UI", Font.BOLD, 12);
-        Font fieldFont = new Font("Segoe UI", Font.PLAIN, 12);
+        panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(null); // Absolute layout
         panelPrincipal.setBackground(new Color(250, 250, 250));
         
+        // Estética: fuentes
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 12);
+        Font fieldFont = new Font("Segoe UI", Font.PLAIN, 12);
+        
         // Etiqueta y combo de modelos
-        JLabel lblModelo = new JLabel("Seleccionar Modelo:");
+        lblModelo = new JLabel("Seleccionar Modelo:");
         lblModelo.setHorizontalAlignment(SwingConstants.RIGHT);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panelPrincipal.add(lblModelo, gbc);
+        lblModelo.setFont(labelFont);
+        lblModelo.setBounds(50, 20, 150, 20);
+        panelPrincipal.add(lblModelo);
         
         comboModelos = new JComboBox<>();
-        comboModelos.setPreferredSize(new Dimension(240, 24));
+        comboModelos.setBounds(220, 20, 240, 24);
         comboModelos.addActionListener(e -> actualizarDatos());
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        panelPrincipal.add(comboModelos, gbc);
-        gbc.weightx = 0;
+        panelPrincipal.add(comboModelos);
         
-        // Campos de texto editables
-        java.util.List<String> etiquetas = new java.util.LinkedList<>();
-        etiquetas.add("Marca:");
-        etiquetas.add("Modelo:");
-        etiquetas.add("Color:");
-        etiquetas.add("Procesador:");
-        etiquetas.add("Pantalla:");
-        etiquetas.add("Peso:");
-        etiquetas.add("Cámara Principal:");
-        etiquetas.add("Cámara Frontal:");
-        etiquetas.add("Sistema Operativo:");
-        etiquetas.add("Almacenamiento:");
-        etiquetas.add("Memoria:");
-        etiquetas.add("Precio (S/):");
-        etiquetas.add("Medidas (cm):");
-        etiquetas.add("Plan:");
-        java.util.List<JTextField> campos = new java.util.LinkedList<>();
+        // Campos de texto editables con etiquetas
+        lblMarca = new JLabel("Marca:");
+        lblMarca.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblMarca.setFont(labelFont);
+        lblMarca.setBounds(50, 60, 150, 20);
+        panelPrincipal.add(lblMarca);
         
-        for (int i = 0; i < etiquetas.size(); i++) {
-            JLabel lbl = new JLabel(etiquetas.get(i));
-            lbl.setHorizontalAlignment(SwingConstants.RIGHT);
-            lbl.setFont(labelFont);
-            gbc.gridx = 0;
-            gbc.gridy = i + 1;
-            gbc.anchor = GridBagConstraints.EAST;
-            panelPrincipal.add(lbl, gbc);
-
-            JTextField campo = new JTextField(1);
-            campo.setEditable(true);
-            campo.setPreferredSize(new Dimension(240, 24));
-            campo.setFont(fieldFont);
-            campos.add(campo);
-            gbc.gridx = 1;
-            gbc.weightx = 1.0;
-            gbc.anchor = GridBagConstraints.WEST;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            panelPrincipal.add(campo, gbc);
-            gbc.weightx = 0;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-        }
+        txtMarca = new JTextField();
+        txtMarca.setEditable(true);
+        txtMarca.setFont(fieldFont);
+        txtMarca.setBounds(220, 60, 240, 24);
+        panelPrincipal.add(txtMarca);
         
-        txtMarca = campos.get(0);
-        txtModelo = campos.get(1);
-        txtColor = campos.get(2);
-        txtProcesador = campos.get(3);
-        txtPantalla = campos.get(4);
-        txtPeso = campos.get(5);
-        txtCamara = campos.get(6);
-        txtCamaraFrontal = campos.get(7);
-        txtSO = campos.get(8);
-        txtAlmacenamiento = campos.get(9);
-        txtMemoria = campos.get(10);
-        txtPrecio = campos.get(11);
-        txtMedidas = campos.get(12);
-        txtPlan = campos.get(13);
+        lblModelo2 = new JLabel("Modelo:");
+        lblModelo2.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblModelo2.setFont(labelFont);
+        lblModelo2.setBounds(50, 95, 150, 20);
+        panelPrincipal.add(lblModelo2);
         
-        // Panel de botones
-        JPanel panelBotones = new JPanel();
+        txtModelo = new JTextField();
+        txtModelo.setEditable(true);
+        txtModelo.setFont(fieldFont);
+        txtModelo.setBounds(220, 95, 240, 24);
+        panelPrincipal.add(txtModelo);
+        
+        lblColor = new JLabel("Color:");
+        lblColor.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblColor.setFont(labelFont);
+        lblColor.setBounds(50, 130, 150, 20);
+        panelPrincipal.add(lblColor);
+        
+        txtColor = new JTextField();
+        txtColor.setEditable(true);
+        txtColor.setFont(fieldFont);
+        txtColor.setBounds(220, 130, 240, 24);
+        panelPrincipal.add(txtColor);
+        
+        lblProcesador = new JLabel("Procesador:");
+        lblProcesador.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblProcesador.setFont(labelFont);
+        lblProcesador.setBounds(50, 165, 150, 20);
+        panelPrincipal.add(lblProcesador);
+        
+        txtProcesador = new JTextField();
+        txtProcesador.setEditable(true);
+        txtProcesador.setFont(fieldFont);
+        txtProcesador.setBounds(220, 165, 240, 24);
+        panelPrincipal.add(txtProcesador);
+        
+        lblPantalla = new JLabel("Pantalla:");
+        lblPantalla.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblPantalla.setFont(labelFont);
+        lblPantalla.setBounds(50, 200, 150, 20);
+        panelPrincipal.add(lblPantalla);
+        
+        txtPantalla = new JTextField();
+        txtPantalla.setEditable(true);
+        txtPantalla.setFont(fieldFont);
+        txtPantalla.setBounds(220, 200, 240, 24);
+        panelPrincipal.add(txtPantalla);
+        
+        lblPeso = new JLabel("Peso:");
+        lblPeso.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblPeso.setFont(labelFont);
+        lblPeso.setBounds(50, 235, 150, 20);
+        panelPrincipal.add(lblPeso);
+        
+        txtPeso = new JTextField();
+        txtPeso.setEditable(true);
+        txtPeso.setFont(fieldFont);
+        txtPeso.setBounds(220, 235, 240, 24);
+        panelPrincipal.add(txtPeso);
+        
+        lblCamara = new JLabel("C\u00e1mara Principal:");
+        lblCamara.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblCamara.setFont(labelFont);
+        lblCamara.setBounds(50, 270, 150, 20);
+        panelPrincipal.add(lblCamara);
+        
+        txtCamara = new JTextField();
+        txtCamara.setEditable(true);
+        txtCamara.setFont(fieldFont);
+        txtCamara.setBounds(220, 270, 240, 24);
+        panelPrincipal.add(txtCamara);
+        
+        lblCamaraFrontal = new JLabel("C\u00e1mara Frontal:");
+        lblCamaraFrontal.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblCamaraFrontal.setFont(labelFont);
+        lblCamaraFrontal.setBounds(50, 305, 150, 20);
+        panelPrincipal.add(lblCamaraFrontal);
+        
+        txtCamaraFrontal = new JTextField();
+        txtCamaraFrontal.setEditable(true);
+        txtCamaraFrontal.setFont(fieldFont);
+        txtCamaraFrontal.setBounds(220, 305, 240, 24);
+        panelPrincipal.add(txtCamaraFrontal);
+        
+        lblSO = new JLabel("Sistema Operativo:");
+        lblSO.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblSO.setFont(labelFont);
+        lblSO.setBounds(50, 340, 150, 20);
+        panelPrincipal.add(lblSO);
+        
+        txtSO = new JTextField();
+        txtSO.setEditable(true);
+        txtSO.setFont(fieldFont);
+        txtSO.setBounds(220, 340, 240, 24);
+        panelPrincipal.add(txtSO);
+        
+        lblAlmacenamiento = new JLabel("Almacenamiento:");
+        lblAlmacenamiento.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblAlmacenamiento.setFont(labelFont);
+        lblAlmacenamiento.setBounds(50, 375, 150, 20);
+        panelPrincipal.add(lblAlmacenamiento);
+        
+        txtAlmacenamiento = new JTextField();
+        txtAlmacenamiento.setEditable(true);
+        txtAlmacenamiento.setFont(fieldFont);
+        txtAlmacenamiento.setBounds(220, 375, 240, 24);
+        panelPrincipal.add(txtAlmacenamiento);
+        
+        lblMemoria = new JLabel("Memoria:");
+        lblMemoria.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblMemoria.setFont(labelFont);
+        lblMemoria.setBounds(50, 410, 150, 20);
+        panelPrincipal.add(lblMemoria);
+        
+        txtMemoria = new JTextField();
+        txtMemoria.setEditable(true);
+        txtMemoria.setFont(fieldFont);
+        txtMemoria.setBounds(220, 410, 240, 24);
+        panelPrincipal.add(txtMemoria);
+        
+        lblPrecio = new JLabel("Precio (S/):");
+        lblPrecio.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblPrecio.setFont(labelFont);
+        lblPrecio.setBounds(50, 445, 150, 20);
+        panelPrincipal.add(lblPrecio);
+        
+        txtPrecio = new JTextField();
+        txtPrecio.setEditable(true);
+        txtPrecio.setFont(fieldFont);
+        txtPrecio.setBounds(220, 445, 240, 24);
+        panelPrincipal.add(txtPrecio);
+        
+        lblMedidas = new JLabel("Medidas (cm):");
+        lblMedidas.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblMedidas.setFont(labelFont);
+        lblMedidas.setBounds(50, 480, 150, 20);
+        panelPrincipal.add(lblMedidas);
+        
+        txtMedidas = new JTextField();
+        txtMedidas.setEditable(true);
+        txtMedidas.setFont(fieldFont);
+        txtMedidas.setBounds(220, 480, 240, 24);
+        panelPrincipal.add(txtMedidas);
+        
+        lblPlan = new JLabel("Plan:");
+        lblPlan.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblPlan.setFont(labelFont);
+        lblPlan.setBounds(50, 515, 150, 20);
+        panelPrincipal.add(lblPlan);
+        
+        txtPlan = new JTextField();
+        txtPlan.setEditable(true);
+        txtPlan.setFont(fieldFont);
+        txtPlan.setBounds(220, 515, 240, 24);
+        panelPrincipal.add(txtPlan);
+        
+        // Botones
         btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(e -> guardarCambios());
         btnGuardar.setFont(labelFont);
-        btnGuardar.setPreferredSize(new Dimension(100, 28));
         btnGuardar.setBackground(new Color(220, 240, 220));
+        btnGuardar.setBounds(220, 555, 100, 28);
+        panelPrincipal.add(btnGuardar);
         
         btnCerrar = new JButton("Cerrar");
         btnCerrar.addActionListener(e -> dispose());
         btnCerrar.setFont(labelFont);
-        btnCerrar.setPreferredSize(new Dimension(100, 28));
         btnCerrar.setBackground(new Color(230, 230, 230));
-        
-        panelBotones.add(btnGuardar);
-        panelBotones.add(btnCerrar);
-        
-        gbc.gridx = 0;
-        gbc.gridy = etiquetas.size() + 1;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelPrincipal.add(panelBotones, gbc);
+        btnCerrar.setBounds(340, 555, 100, 28);
+        panelPrincipal.add(btnCerrar);
         
         add(panelPrincipal);
     }
@@ -193,6 +316,10 @@ public class DialogoModificarTelefono extends JDialog {
         }
     }
     
+    /**
+     * Guarda los cambios realizados en los campos del teléfono seleccionado.
+     * Actualiza los datos en DatosGlobales, refresca el combo box y mantiene la ventana abierta.
+     */
     private void guardarCambios() {
         try {
             if (indiceActual >= 0 && indiceActual < DatosGlobales.getCantidadTelefonos()) {
@@ -213,12 +340,22 @@ public class DialogoModificarTelefono extends JDialog {
                 tel.setMedidas(txtMedidas.getText());
                 tel.setTipoPlan(txtPlan.getText());
                 
+                // Guardar los cambios en DatosGlobales
+                DatosGlobales.setTelefono(indiceActual, tel);
+                
+                // Actualizar el combo con el nuevo modelo
+                cargarModelos();
+                comboModelos.setSelectedIndex(indiceActual);
+                
+                // Mostrar mensaje de éxito
                 JOptionPane.showMessageDialog(this, "Cambios guardados correctamente.",
-                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                        "Cambios guardados", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Mantener la ventana abierta y mostrar los datos actualizados
+                mostrarDatos(indiceActual);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Error: El precio debe ser un número válido.",
+            JOptionPane.showMessageDialog(this, "Error: El precio debe ser un n\u00famero válido.",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

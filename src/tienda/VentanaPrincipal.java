@@ -2,6 +2,10 @@ package tienda;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * VentanaPrincipal - Ventana principal de la aplicación "Tienda de Celulares 1.0"
@@ -33,14 +37,14 @@ public class VentanaPrincipal extends JFrame {
     private static final String MENU_ARCHIVO = "Archivo";
     private static final String MENU_MANTENIMIENTO = "Mantenimiento";
     private static final String MENU_VENTAS = "Ventas";
-    private static final String MENU_CONFIGURACION = "Configuración";
+    private static final String MENU_CONFIGURACION = "Configuraci\u00F3n";
     private static final String MENU_AYUDA = "Ayuda";
     
     // Constantes para los items del menú
     private static final String ITEM_SALIR = "Salir";
-    private static final String ITEM_CONSULTAR = "Consultar Teléfono Móvil";
-    private static final String ITEM_MODIFICAR = "Modificar Teléfono Móvil";
-    private static final String ITEM_LISTAR = "Listar Teléfonos Móviles";
+    private static final String ITEM_CONSULTAR = "Consultar Tel\u00E9fono M\u00F3vil";
+    private static final String ITEM_MODIFICAR = "Modificar Tel\u00E9fono M\u00F3vil";
+    private static final String ITEM_LISTAR = "Listar Tel\u00E9fonos M\u00F3viles";
     private static final String ITEM_VENDER = "Vender";
     private static final String ITEM_CONFIG_DESCUENTOS = "Configurar descuentos";
     private static final String ITEM_CONFIG_OBSEQUIOS = "Configurar obsequios";
@@ -48,7 +52,7 @@ public class VentanaPrincipal extends JFrame {
     
     // Constantes para mensajes de diálogos
     private static final String DIALOGO_CONFIRMAR = "Confirmar Salida";
-    private static final String MENSAJE_SALIDA = "¿Está seguro de que desea salir?";
+    private static final String MENSAJE_SALIDA = "\u00BFEst\u00E1 seguro de que desea salir?";
     
     // ========== VARIABLES DE INSTANCIA ==========
     // Barra de menú y menús principales
@@ -69,6 +73,12 @@ public class VentanaPrincipal extends JFrame {
     private JMenuItem itemConfigObsequios;
     private JMenuItem itemAcercaDe;
     
+    // Panel principal con imagen de fondo
+    private JPanel panelPrincipal;
+    
+    // Imagen de fondo
+    private Image imagenFondo;
+    
     // ========== CONSTRUCTOR ==========
     /**
      * Constructor de VentanaPrincipal
@@ -81,6 +91,7 @@ public class VentanaPrincipal extends JFrame {
      */
     public VentanaPrincipal() {
         inicializarVentana();           // Paso 1: Configurar propiedades del JFrame
+        cargarImagenFondo();            // Paso 1.5: Cargar imagen de fondo
         inicializarComponentes();        // Paso 2: Crear menús e items
         crearMenu();                     // Paso 3: Añadir items a menús
         crearFormulario();               // Paso 4: Crear panel principal
@@ -94,10 +105,31 @@ public class VentanaPrincipal extends JFrame {
      */
     private void inicializarVentana() {
         setTitle(TITULO);                           // Texto que aparece en la barra superior
-        setDefaultCloseOperation(EXIT_ON_CLOSE);   // Cerrar la aplicación al hacer clic en X
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // No cerrar automáticamente, manejar manualmente
         setSize(ANCHO_VENTANA, ALTO_VENTANA);      // Tamaño inicial de la ventana
         setLocationRelativeTo(null);                // Centrar la ventana en la pantalla
         setResizable(true);                         // Permitir redimensionar la ventana
+        
+        // Agregar listener para manejar el clic en la X
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                salir(); // Ejecutar la misma lógica que el menú Salir
+            }
+        });
+    }
+    
+    // ========== CARGAR IMAGEN DE FONDO ==========
+    /**
+     * Carga la imagen de fondo desde el archivo Tienda_1.png
+     */
+    private void cargarImagenFondo() {
+        try {
+            imagenFondo = ImageIO.read(getClass().getResource("Tienda_1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Si no se puede cargar, imagenFondo queda null
+        }
     }
     
     // ========== INICIALIZAR COMPONENTES ==========
@@ -200,12 +232,24 @@ public class VentanaPrincipal extends JFrame {
     
     // ========== CREAR FORMULARIO (PANEL PRINCIPAL) ==========
     /**
-     * Crea el panel principal de la ventana.
-     * Por ahora es un panel vacío que centraliza elementos.
-     * Se puede extender en el futuro para agregar botones, etiquetas, etc.
+     * Crea el panel principal de la ventana con imagen de fondo.
+     * El panel dibuja la imagen escalada para cubrir todo el área de la ventana.
      */
     public void crearFormulario() {
-        JPanel panelPrincipal = new JPanel();
+        panelPrincipal = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (imagenFondo != null) {
+                    // Obtener el tamaño del panel
+                    int ancho = getWidth();
+                    int alto = getHeight();
+                    
+                    // Dibujar la imagen escalada para cubrir todo el área
+                    g.drawImage(imagenFondo, 0, 0, ancho, alto, this);
+                }
+            }
+        };
         panelPrincipal.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         add(panelPrincipal);
     }

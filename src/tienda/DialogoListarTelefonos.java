@@ -17,8 +17,13 @@ public class DialogoListarTelefonos extends JDialog {
     private JButton btnCerrar;
     private JComboBox<String> comboOrden;
     
+    /**
+     * Constructor que crea el diálogo para listar y mostrar todos los teléfonos registrados.
+     * Configura la ventana con un área de texto para el reporte y opciones para ordenar la lista.
+     * @param padre La ventana principal (JFrame) que es el padre de este diálogo modal.
+     */
     public DialogoListarTelefonos(JFrame padre) {
-        super(padre, "Listar Teléfonos Móviles", true);
+        super(padre, "Listar Tel\u00E9fonos M\u00F3viles", true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(padre);
@@ -31,19 +36,25 @@ public class DialogoListarTelefonos extends JDialog {
         crearComponentes();
     }
     
+    /**
+     * Crea y configura todos los componentes visuales del diálogo.
+     * Incluye selector de orden, botones y área de texto para el reporte.
+     */
     private void crearComponentes() {
-        JPanel panelPrincipal = new JPanel(new BorderLayout());
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(null); // Absolute layout
         
         // Panel superior con selector de orden
-        JPanel panelTop = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         JLabel lblOrden = new JLabel("Orden:");
         lblOrden.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblOrden.setBounds(10, 10, 50, 20);
+        panelPrincipal.add(lblOrden);
+        
         comboOrden = new JComboBox<>(new String[] {"Original", "Precio (Mayor → Menor)", "Precio (Menor → Mayor)", "Marca (A → Z)"});
         comboOrden.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         comboOrden.addActionListener(e -> generarReporte());
-        panelTop.add(lblOrden);
-        panelTop.add(comboOrden);
-        panelPrincipal.add(panelTop, BorderLayout.NORTH);
+        comboOrden.setBounds(70, 10, 200, 24);
+        panelPrincipal.add(comboOrden);
         
         // Área de texto con scroll
         areaTexto = new JTextArea();
@@ -52,38 +63,39 @@ public class DialogoListarTelefonos extends JDialog {
         areaTexto.setMargin(new Insets(10,10,10,10));
         areaTexto.setBackground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(areaTexto);
-        scrollPane.setPreferredSize(new Dimension(760, 420));
-        panelPrincipal.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.setBounds(10, 40, 760, 380);
+        panelPrincipal.add(scrollPane);
         
-        // Panel de botones
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        // Botones
         btnListar = new JButton("Listar");
         btnListar.addActionListener(e -> generarReporte());
+        btnListar.setBounds(300, 430, 100, 28);
+        panelPrincipal.add(btnListar);
         
         btnCerrar = new JButton("Cerrar");
         btnCerrar.addActionListener(e -> dispose());
+        btnCerrar.setBounds(420, 430, 100, 28);
+        panelPrincipal.add(btnCerrar);
         
         Font btnFont = new Font("Segoe UI", Font.BOLD, 12);
         btnListar.setFont(btnFont);
         btnCerrar.setFont(btnFont);
-        btnListar.setPreferredSize(new Dimension(100, 28));
-        btnCerrar.setPreferredSize(new Dimension(100, 28));
         btnListar.setBackground(new Color(220, 235, 255));
         btnCerrar.setBackground(new Color(230, 230, 230));
-        panelBotones.add(btnListar);
-        panelBotones.add(btnCerrar);
-        
-        panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
         
         add(panelPrincipal);
     }
     
+    /**
+     * Genera el reporte de teléfonos ordenado según la selección del combo.
+     * Obtiene la lista de teléfonos, los ordena y formatea el texto para mostrar.
+     */
     private void generarReporte() {
         StringBuilder reporte = new StringBuilder();
-        reporte.append("===============================REPORTE DE TELÉFONOS MÓVILES===============================\n\n");
+        reporte.append("=============================== REPORTE DE TEL\u00c9FONOS M\u00d3VILES ===============================\n\n");
         
         if (DatosGlobales.getCantidadTelefonos() == 0) {
-            reporte.append("No hay teléfonos registrados.\n");
+            reporte.append("No hay tel\u00e9fonos registrados.\n");
         } else {
             // Construir lista local de teléfonos para poder ordenar sin modificar DatosGlobales
             java.util.List<Telefono> lista = new java.util.ArrayList<>();
@@ -119,16 +131,16 @@ public class DialogoListarTelefonos extends JDialog {
 
             for (int i = 0; i < lista.size(); i++) {
                 Telefono tel = lista.get(i);
-                reporte.append("TELÉFONO #").append(i + 1).append("\n");
-                reporte.append("─────────────────────────────────────────\n");
+                reporte.append("Tel\u00E9fono #").append(i + 1).append("\n");
+                reporte.append("────────────────────────────────────────────────────────────────────────────────────────────────────\n");
                 reporte.append("Marca: ").append(tel.getMarca()).append("\n");
                 reporte.append("Modelo: ").append(tel.getModelo()).append("\n");
                 reporte.append("Color: ").append(tel.getColor()).append("\n");
                 reporte.append("Procesador: ").append(tel.getProcesador()).append("\n");
                 reporte.append("Pantalla: ").append(tel.getPantalla()).append("\n");
                 reporte.append("Peso: ").append(tel.getPeso()).append("\n");
-                reporte.append("Cámara Principal: ").append(tel.getCamaraPrincipal()).append("\n");
-                reporte.append("Cámara Frontal: ").append(tel.getCamaraFrontal()).append("\n");
+                reporte.append("C\u00e1mara Principal: ").append(tel.getCamaraPrincipal()).append("\n");
+                reporte.append("C\u00e1mara Frontal: ").append(tel.getCamaraFrontal()).append("\n");
                 reporte.append("Sistema Operativo: ").append(tel.getSistemaOperativo()).append("\n");
                 reporte.append("Almacenamiento: ").append(tel.getCapacidadAlmacenamiento()).append("\n");
                 reporte.append("Memoria: ").append(tel.getMemoria()).append("\n");

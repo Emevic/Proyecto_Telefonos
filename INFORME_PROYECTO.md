@@ -1,8 +1,8 @@
 INFORME DEL PROYECTO: TIENDA DE CELULARES
 =======================================
 
-Fecha: 24 de noviembre de 2025
-Versión del Informe: 2.0
+Fecha: 18 de diciembre de 2025
+Versión del Informe: 3.0
 
 Objetivo del informe
 --------------------
@@ -31,19 +31,24 @@ javac -d bin src\tienda\*.java
 java -cp bin tienda.VentanaPrincipal
 ```
 
+También se puede ejecutar directamente desde VS Code usando el botón "Run Java" después de configurar los archivos `.project`, `.classpath`, `launch.json` y `settings.json` en el directorio `.vscode`.
+
 Explicación por módulo (nivel: programador novato)
 --------------------------------------------------
 Cada sección explica responsabilidad, cómo usarlo desde el código, y puntos clave para entenderlo.
 
 **`VentanaPrincipal.java`**
-- Responsabilidad: Ventana principal de la aplicación, crea la barra de menú y abre los diálogos.
+- Responsabilidad: Ventana principal de la aplicación, crea la barra de menú, muestra un fondo con imagen escalable y abre los diálogos.
 - Componentes clave:
   - `JMenuBar menuBar` y varios `JMenu`/`JMenuItem` para las secciones: Archivo, Mantenimiento, Ventas, Configuración, Ayuda.
+  - Panel principal con fondo: imagen "Tienda_1.png" que se escala proporcionalmente al tamaño de la ventana.
+  - Comportamiento del botón cerrar (X): muestra diálogo de confirmación igual que la opción "Salir" del menú.
   - Métodos que abren diálogos: `abrirDialogoConsultar()`, `abrirDialogoModificar()`, etc.
   - `main` crea la ventana en el hilo correcto (`SwingUtilities.invokeLater`).
 - Conceptos importantes para un novato:
   - Separación de responsabilidades: la ventana solo coordina, no contiene lógica de negocios.
   - Listeners: los `item.addActionListener(...)` enlazan acciones del UI con métodos.
+  - Escalado de imágenes: uso de `Graphics.drawImage` con cálculo de escala para mantener proporción.
 
 **`DatosGlobales.java`**
 - Responsabilidad: Centro de datos y utilidades. Contiene los datos de hasta 5 teléfonos, parámetros de descuento y obsequios, y funciones de venta.
@@ -110,10 +115,21 @@ Cada sección explica responsabilidad, cómo usarlo desde el código, y puntos c
 - Responsabilidad: Permitir editar los nombres de los obsequios según cantidad.
 - Flujo:
   - Guardar los textos en `DatosGlobales.obsequio1/2/3`.
+- Mejoras recientes: Ajustado ancho del diálogo y centrado de controles para mejorar la legibilidad del texto completo de los labels sin alterar tamaños de controles.
 
 **`DialogoAcercaDe.java`**
 - Responsabilidad: Mostrar información del proyecto y autores.
-- Nota: útil como referencia para usuarios y para reconocer a los autores.
+- Nota: útil como referencia para usuarios y para reconocer a los autores. El botón "Cerrar" tiene el texto en negrita para mayor énfasis.
+
+Configuración de VS Code para ejecución directa
+-----------------------------------------------
+Para ejecutar el proyecto directamente desde el botón "Run Java" en VS Code, se han configurado los siguientes archivos en el directorio `.vscode`:
+- `.project`: Define el proyecto como un proyecto Java de Eclipse.
+- `.classpath`: Especifica las rutas de fuente y salida (src y bin).
+- `launch.json`: Configura la ejecución de la clase principal `tienda.VentanaPrincipal`.
+- `settings.json`: Establece el directorio de salida de compilación en `bin`.
+
+Esto permite compilar y ejecutar con un clic desde VS Code, facilitando el desarrollo.
 
 Buenas prácticas y recomendaciones (nivel básico)
 ------------------------------------------------
@@ -169,12 +185,16 @@ He documentado y comentado los módulos principales, proporcionado recomendacion
 - ✅ Cierre de diálogos: Funciona correctamente en primer intento
 - ✅ Código comentado: Nivel programador novato
 
-**Estado actual (11/12/2025)**:
+**Estado actual (18/12/2025)**:
 - ✅ Compilación: 0 errores, 8 advertencias no-críticas (advertencias `this-escape` pendientes)
 - ✅ Funcionalidad: 100% operativa
 - ✅ Documentación: Completa y actualizada
 - ✅ Cierre de diálogos: Funciona correctamente en primer intento
 - ✅ Código comentado: Nivel programador novato
+- ✅ Fondo con imagen escalable en ventana principal
+- ✅ Comportamiento del botón X igual que opción Salir
+- ✅ Configuración de VS Code para ejecución directa
+- ✅ Ajustes de UI en diálogos para mejor legibilidad y centrado
 
 El proyecto está **LISTO PARA PRODUCCIÓN EDUCATIVA** sin modificaciones adicionales.
 
@@ -184,5 +204,16 @@ Si quieres, continúo con cualquiera de las siguientes tareas:
 - Agregar persistencia (guardar datos en archivo o BD).
 - Mejoras de interfaz gráfica (colores, iconos, layouts mejorados).
 
+## Cambios recientes (18/12/2025 - Actualización)
+- **Edición gráfica en Eclipse**: Los diálogos `DialogoAcercaDe`, `DialogoConsultarTelefono` y `DialogoModificarTelefono` han sido modificados para declarar todos los componentes (labels, textfields, botones) como variables de instancia privadas. Esto permite la edición visual directa usando herramientas como Eclipse WindowBuilder, facilitando el mantenimiento y diseño de la interfaz gráfica.
+- **Imagen de fondo mejorada**: En `VentanaPrincipal`, la imagen de fondo ahora se escala para cubrir completamente el área de la ventana (sin mantener proporción), y el `panelPrincipal` se declara como variable de instancia para compatibilidad con editores gráficos.
+- **Documentación completa**: Se han agregado comentarios Javadoc exhaustivos a todos los métodos que carecían de ellos, incluyendo descripciones detalladas, parámetros (`@param`) y valores de retorno (`@return`). Esto mejora la legibilidad y mantenibilidad del código.
+- **Compilación verificada**: El proyecto se compila exitosamente sin errores, manteniendo toda la funcionalidad existente y las mejoras implementadas.
+
+## Cambios recientes (19/12/2025)
+- **Botón guardar mejorado**: Los botones "Guardar" en los diálogos de modificación y configuración ahora mantienen la ventana abierta después de guardar, permitiendo ajustes continuos y mostrando inmediatamente los cambios realizados.
+- **Persistencia de modificaciones**: Las modificaciones a teléfonos se guardan correctamente en `DatosGlobales` y persisten durante la sesión actual, permitiendo ver los cambios al cambiar de teléfono en el combo box.
+- **Comentarios actualizados**: Los Javadoc de los métodos `guardarCambios`, `guardarDescuentos` y `guardarObsequios` han sido actualizados para reflejar el nuevo comportamiento de mantener la ventana abierta y refrescar los datos.
+
 ---
-Generado por el asistente el 11 de diciembre de 2025.
+Generado por el asistente el 19 de diciembre de 2025.

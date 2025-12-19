@@ -20,12 +20,14 @@ Proyecto_Telefonos/
 
 ## Características Principales
 - ✅ Consultar detalles de teléfonos
-- ✅ Listar todos los teléfonos disponibles
+- ✅ Listar todos los teléfonos disponibles (con opción de ordenar)
 - ✅ Modificar atributos de teléfonos
 - ✅ Procesar ventas con cálculo automático de descuentos
 - ✅ Asignación automática de obsequios según cantidad
 - ✅ Configuración de descuentos y obsequios
 - ✅ Interfaz gráfica intuitiva (Swing)
+- ✅ Fondo con imagen escalable en ventana principal
+- ✅ Comportamiento del botón cerrar (X) con confirmación igual que "Salir"
 
 ## Compilación (Windows PowerShell)
 
@@ -43,6 +45,15 @@ javac -d bin src\tienda\*.java
 # Ejecutar la aplicación
 java -cp bin tienda.VentanaPrincipal
 ```
+
+## Ejecución desde VS Code
+
+El proyecto está configurado para ejecutarse directamente desde VS Code usando el botón "Run Java". Los archivos de configuración incluyen:
+- `.project` y `.classpath`: Definen el proyecto Java.
+- `.vscode/launch.json`: Configura la ejecución de `VentanaPrincipal`.
+- `.vscode/settings.json`: Establece el directorio de salida en `bin`.
+
+Simplemente abre el proyecto en VS Code y presiona "Run Java".
 
 ## Módulos del Proyecto
 
@@ -123,6 +134,25 @@ Nota: Estas advertencias son no-críticas y se producen porque algunos métodos 
 - ✅ Añadido selector de orden en `DialogoListarTelefonos` con opciones: `Original`, `Precio (Mayor → Menor)`, `Precio (Menor → Mayor)`, `Marca (A → Z)`.
 - ✅ Implementada la lógica de ordenación local en el diálogo (no se modificó `DatosGlobales`).
 
+## Cambios recientes (18/12/2025)
+- ✅ Agregado fondo con imagen "Tienda_1.png" escalable proporcionalmente en la ventana principal.
+- ✅ Modificado comportamiento del botón cerrar (X) para mostrar diálogo de confirmación igual que la opción "Salir".
+- ✅ Configurado proyecto para ejecución directa desde el botón "Run Java" en VS Code (archivos `.project`, `.classpath`, `launch.json`, `settings.json`).
+- ✅ Actualizada documentación en `README.md` e `INFORME_PROYECTO.md`.
+- ✅ Ajustado ancho y centrado de controles en `DialogoConfigurarObsequios` para mejorar legibilidad sin alterar tamaños.
+- ✅ Cambiado texto del botón "Cerrar" a negrita en `DialogoAcercaDe`.
+
+## Cambios recientes (18/12/2025 - Actualización)
+- ✅ **Edición gráfica en Eclipse**: Modificados diálogos `DialogoAcercaDe`, `DialogoConsultarTelefono` y `DialogoModificarTelefono` para declarar componentes como variables de instancia, permitiendo edición visual con WindowBuilder u otros editores gráficos.
+- ✅ **Imagen de fondo escalable**: Cambiada la lógica de escalado en `VentanaPrincipal` para que la imagen cubra toda el área de la ventana sin mantener proporción, y declarado `panelPrincipal` como variable de instancia para compatibilidad con editores gráficos.
+- ✅ **Documentación completa**: Agregados comentarios Javadoc a todos los métodos faltantes en el proyecto, incluyendo explicaciones detalladas de parámetros y funcionalidad.
+- ✅ **Compilación verificada**: Proyecto compilado exitosamente sin errores, manteniendo toda la funcionalidad existente.
+
+## Cambios recientes (19/12/2025)
+- ✅ **Botón guardar mejorado**: Corregidos los botones "Guardar" en `DialogoModificarTelefono`, `DialogoConfigurarDescuentos` y `DialogoConfigurarObsequios` para no cerrar la ventana y mostrar los cambios guardados inmediatamente.
+- ✅ **Persistencia de cambios**: Los cambios en teléfonos se guardan correctamente en `DatosGlobales` durante la sesión actual.
+- ✅ **Comentarios actualizados**: Actualizados los Javadoc de los métodos modificados para reflejar el nuevo comportamiento (ventana abierta, refresco de datos).
+
 
 ## Autores
 - Nayeli Bianca Clemente Morales
@@ -132,4 +162,4 @@ Nota: Estas advertencias son no-críticas y se producen porque algunos métodos 
 - Carlos Eduardo Saavedra Alvarado
 
 ---
-**Última actualización**: 11 de diciembre de 2025
+**Última actualización**: 19 de diciembre de 2025

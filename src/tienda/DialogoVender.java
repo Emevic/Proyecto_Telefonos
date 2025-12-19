@@ -18,8 +18,13 @@ public class DialogoVender extends JDialog {
     private JButton btnVender;
     private JButton btnCerrar;
     
+    /**
+     * Constructor que crea el diálogo para realizar una venta de teléfonos.
+     * Configura la interfaz con selección de modelo, cantidad y área para mostrar la boleta de venta.
+     * @param padre La ventana principal (JFrame) que es el padre de este diálogo modal.
+     */
     public DialogoVender(JFrame padre) {
-        super(padre, "Vender Teléfono Móvil", true);
+        super(padre, "Vender Tel\u00e9fono M\u00f3vil", true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(700, 600);
         setLocationRelativeTo(padre);
@@ -33,81 +38,62 @@ public class DialogoVender extends JDialog {
         cargarModelos();
     }
     
+    /**
+     * Crea y configura todos los componentes visuales del diálogo de venta.
+     * Incluye selectores de modelo, cantidad, campos de precio y área de boleta.
+     */
     private void crearComponentes() {
-        JPanel panelPrincipal = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 12, 8, 12);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        // Estética: fuentes y fondo
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(null); // Absolute layout
+        panelPrincipal.setBackground(new Color(250, 250, 250));
+        
+        // Estética: fuentes
         Font labelFont = new Font("Segoe UI", Font.BOLD, 12);
         Font fieldFont = new Font("Segoe UI", Font.PLAIN, 12);
-        panelPrincipal.setBackground(new Color(250, 250, 250));
         
         // Seleccionar modelo
         JLabel lblModelo = new JLabel("Seleccionar Modelo:");
         lblModelo.setFont(labelFont);
         lblModelo.setHorizontalAlignment(SwingConstants.RIGHT);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.EAST;
-        panelPrincipal.add(lblModelo, gbc);
+        lblModelo.setBounds(50, 20, 150, 20);
+        panelPrincipal.add(lblModelo);
         
         comboModelos = new JComboBox<>();
-        comboModelos.setPreferredSize(new Dimension(260, 24));
         comboModelos.setFont(fieldFont);
         comboModelos.addActionListener(e -> actualizarPrecio());
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panelPrincipal.add(comboModelos, gbc);
-        gbc.weightx = 0;
+        comboModelos.setBounds(220, 20, 260, 24);
+        panelPrincipal.add(comboModelos);
         
         // Precio unitario
         JLabel lblPrecio = new JLabel("Precio Unitario:");
         lblPrecio.setFont(labelFont);
         lblPrecio.setHorizontalAlignment(SwingConstants.RIGHT);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.EAST;
-        panelPrincipal.add(lblPrecio, gbc);
+        lblPrecio.setBounds(50, 60, 150, 20);
+        panelPrincipal.add(lblPrecio);
         
-        txtPrecioUnitario = new JTextField(15);
+        txtPrecioUnitario = new JTextField();
         txtPrecioUnitario.setEditable(false);
-        txtPrecioUnitario.setPreferredSize(new Dimension(160, 24));
         txtPrecioUnitario.setFont(fieldFont);
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panelPrincipal.add(txtPrecioUnitario, gbc);
-        gbc.weightx = 0;
+        txtPrecioUnitario.setBounds(220, 60, 160, 24);
+        panelPrincipal.add(txtPrecioUnitario);
         
         // Cantidad
         JLabel lblCantidad = new JLabel("Cantidad:");
         lblCantidad.setFont(labelFont);
         lblCantidad.setHorizontalAlignment(SwingConstants.RIGHT);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.EAST;
-        panelPrincipal.add(lblCantidad, gbc);
+        lblCantidad.setBounds(50, 100, 150, 20);
+        panelPrincipal.add(lblCantidad);
         
         spinnerCantidad = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
-        Dimension spinnerDim = new Dimension(80, 24);
-        spinnerCantidad.setPreferredSize(spinnerDim);
         ((JSpinner.DefaultEditor)spinnerCantidad.getEditor()).getTextField().setFont(fieldFont);
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panelPrincipal.add(spinnerCantidad, gbc);
-        gbc.weightx = 0;
+        spinnerCantidad.setBounds(220, 100, 80, 24);
+        panelPrincipal.add(spinnerCantidad);
         
         // Área de boleta
         JLabel lblBoleta = new JLabel("Boleta de Venta:");
         lblBoleta.setFont(labelFont);
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        panelPrincipal.add(lblBoleta, gbc);
+        lblBoleta.setBounds(50, 140, 200, 20);
+        panelPrincipal.add(lblBoleta);
         
         areaBoletaVenta = new JTextArea();
         areaBoletaVenta.setEditable(false);
@@ -115,38 +101,30 @@ public class DialogoVender extends JDialog {
         areaBoletaVenta.setMargin(new Insets(10,10,10,10));
         areaBoletaVenta.setBackground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(areaBoletaVenta);
-        scrollPane.setPreferredSize(new Dimension(600, 320));
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        panelPrincipal.add(scrollPane, gbc);
+        scrollPane.setBounds(50, 170, 600, 320);
+        panelPrincipal.add(scrollPane);
         
-        // Panel de botones
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        // Botones
         btnVender = new JButton("Vender");
         btnVender.addActionListener(e -> realizarVenta());
         btnVender.setFont(labelFont);
-        btnVender.setPreferredSize(new Dimension(100, 28));
         btnVender.setBackground(new Color(200, 230, 200));
-
+        btnVender.setBounds(250, 510, 100, 28);
+        panelPrincipal.add(btnVender);
+        
         btnCerrar = new JButton("Cerrar");
         btnCerrar.addActionListener(e -> dispose());
         btnCerrar.setFont(labelFont);
-        btnCerrar.setPreferredSize(new Dimension(100, 28));
         btnCerrar.setBackground(new Color(230, 230, 230));
-
-        panelBotones.add(btnVender);
-        panelBotones.add(btnCerrar);
-        
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelPrincipal.add(panelBotones, gbc);
+        btnCerrar.setBounds(370, 510, 100, 28);
+        panelPrincipal.add(btnCerrar);
         
         add(panelPrincipal);
     }
     
+    /**
+     * Carga los modelos de teléfonos disponibles en el combo box desde DatosGlobales.
+     */
     private void cargarModelos() {
         comboModelos.removeAllItems();
         for (int i = 0; i < DatosGlobales.getCantidadTelefonos(); i++) {
@@ -158,6 +136,9 @@ public class DialogoVender extends JDialog {
         }
     }
     
+    /**
+     * Actualiza el campo de precio unitario cuando cambia la selección de modelo.
+     */
     private void actualizarPrecio() {
         int indice = comboModelos.getSelectedIndex();
         if (indice >= 0 && indice < DatosGlobales.getCantidadTelefonos()) {
@@ -166,6 +147,10 @@ public class DialogoVender extends JDialog {
         }
     }
     
+    /**
+     * Procesa la venta seleccionada, calcula descuentos y genera la boleta.
+     * Actualiza los contadores de ventas en DatosGlobales.
+     */
     private void realizarVenta() {
         try {
             int indice = comboModelos.getSelectedIndex();
@@ -206,11 +191,15 @@ public class DialogoVender extends JDialog {
         }
     }
     
+    /**
+     * Muestra un diálogo con el resumen de ventas acumuladas del día.
+     * Incluye número de ventas, total acumulado y cuota diaria.
+     */
     private void mostrarDialogoVentasAcumuladas() {
         double porcentajeCuota = (DatosGlobales.importeTotalAcumulado / DatosGlobales.cuotaDiaria) * 100;
         
         String mensaje = String.format(
-            "Número de Venta: %d\n" +
+            "N\u00famero de Venta: %d\n" +
             "Importe Total Acumulado: %s\n" +
             "Porcentaje de Cuota Diaria: %.2f%%",
             DatosGlobales.numeroVenta,

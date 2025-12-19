@@ -26,6 +26,21 @@ import java.util.Locale;
  * 
  * @author Sistema de Tienda de Celulares
  * @version 2.0
+ * 
+ * Carácteres UNICODE usados:
+ * - \u00e1 = á
+ * - \u00e9 = é
+ * - \u00ed = í
+ * - \u00f3 = ó
+ * - \u00fa = ú
+ * - \u00f1 = ñ
+ * - \u00c1 = Á
+ * - \u00c9 = É
+ * - \u00cd = Í
+ * - \u00d3 = Ó
+ * - \u00da = Ú
+ * - \u00d1 = Ñ
+ * 
  */
 public class DatosGlobales {
     
@@ -123,7 +138,7 @@ public class DatosGlobales {
     // ========== CONFIGURACIÓN DE OBSEQUIOS ==========
     // Regalos según cantidad de unidades compradas
     public static String obsequio1 = "Protector de pantalla";  // Para 1 unidad
-    public static String obsequio2 = "Funda de teléfono";      // Para 2-5 unidades
+    public static String obsequio2 = "Funda de tel\u00e9fono";      // Para 2-5 unidades
     public static String obsequio3 = "Cable cargador";         // Para 6+ unidades
 
     // ========== VARIABLES DE VENTAS ==========
@@ -155,8 +170,8 @@ public class DatosGlobales {
         pantalla0 = "6.9\"";
         color0 = "Naranja / Azul";
         peso0 = "231gr";
-        camaraPrincipal0 = "Sistema de cámaras Pro Fusion de 48 MP";
-        camaraFrontal0 = "Cámara Center Stage de 18 MP";
+        camaraPrincipal0 = "Sistema de c\u00e1maras Pro Fusion de 48 MP";
+        camaraFrontal0 = "C\u00e1mara Center Stage de 18 MP";
         almacenamiento0 = "256Gb / 512Gb / 1Tb / 2Tb";
         memoria0 = "12Gb";
         medidas0 = "16.4cm * 7.8cm * 0.875cm";
@@ -218,7 +233,7 @@ public class DatosGlobales {
         camaraPrincipal4 = "50MP + Flicker Sensor";
         camaraFrontal4 = "8MP";
         almacenamiento4 = "128Gb";
-        memoria4 = "4 GB (física) + hasta 8 GB (RAM Boost)";
+        memoria4 = "4 GB (f\u00edsica) + hasta 8 GB (RAM Boost)";
         medidas4 = "17.135cm * 7.555cm * 0.831cm";
         precio4 = 489.0;
         tipoPlan4 = Math.random() < 0.5 ? "Prepago" : "Postpago";
@@ -235,7 +250,13 @@ public class DatosGlobales {
         return -1;
     }
 
-    // Método para obtener el porcentaje de descuento según cantidad
+    /**
+     * Obtiene el porcentaje de descuento aplicable según la cantidad de teléfonos comprados.
+     * Utiliza los rangos configurados: 1-5, 6-10, 11-15, 16+ unidades.
+     * 
+     * @param cantidad Cantidad de teléfonos comprados
+     * @return Porcentaje de descuento (0-100)
+     */
     public static double obtenerPorcentajeDescuento(int cantidad) {
         if (cantidad <= 5) {
             return porcentaje1;
@@ -248,7 +269,13 @@ public class DatosGlobales {
         }
     }
 
-    // Método para obtener el obsequio según la cantidad de teléfonos comprados
+    /**
+     * Obtiene el obsequio correspondiente según la cantidad de teléfonos comprados.
+     * Utiliza los rangos: 1 unidad, 2-5 unidades, 6+ unidades.
+     * 
+     * @param cantidad Cantidad de teléfonos comprados
+     * @return Descripción del obsequio o cadena vacía si no aplica
+     */
     public static String obtenerObsequio(int cantidad) {
         if (cantidad <= 0) {
             return ""; // sin obsequio válido
@@ -263,6 +290,13 @@ public class DatosGlobales {
     }
 
     // Utilidades para manipular los teléfonos enumerados
+    /**
+     * Obtiene un objeto Telefono basado en el índice proporcionado.
+     * Construye el objeto a partir de las variables estáticas individuales.
+     * 
+     * @param indice Índice del teléfono (0-4)
+     * @return Objeto Telefono correspondiente al índice, o null si no existe
+     */
     public static Telefono getTelefono(int indice) {
         switch (indice) {
             case 0:
@@ -285,6 +319,106 @@ public class DatosGlobales {
         }
     }
 
+    /**
+     * Actualiza un teléfono en el índice especificado con los datos del objeto Telefono proporcionado.
+     * 
+     * @param indice Índice del teléfono a actualizar (0-4)
+     * @param tel Objeto Telefono con los nuevos datos
+     */
+    public static void setTelefono(int indice, Telefono tel) {
+        if (tel == null) return;
+        switch (indice) {
+            case 0:
+                marca0 = tel.getMarca();
+                modelo0 = tel.getModelo();
+                color0 = tel.getColor();
+                camaraPrincipal0 = tel.getCamaraPrincipal();
+                camaraFrontal0 = tel.getCamaraFrontal();
+                sistemaOperativo0 = tel.getSistemaOperativo();
+                procesador0 = tel.getProcesador();
+                pantalla0 = tel.getPantalla();
+                almacenamiento0 = tel.getCapacidadAlmacenamiento();
+                memoria0 = tel.getMemoria();
+                precio0 = tel.getPrecio();
+                medidas0 = tel.getMedidas();
+                tipoPlan0 = tel.getTipoPlan();
+                peso0 = tel.getPeso();
+                break;
+            case 1:
+                marca1 = tel.getMarca();
+                modelo1 = tel.getModelo();
+                color1 = tel.getColor();
+                camaraPrincipal1 = tel.getCamaraPrincipal();
+                camaraFrontal1 = tel.getCamaraFrontal();
+                sistemaOperativo1 = tel.getSistemaOperativo();
+                procesador1 = tel.getProcesador();
+                pantalla1 = tel.getPantalla();
+                almacenamiento1 = tel.getCapacidadAlmacenamiento();
+                memoria1 = tel.getMemoria();
+                precio1 = tel.getPrecio();
+                medidas1 = tel.getMedidas();
+                tipoPlan1 = tel.getTipoPlan();
+                peso1 = tel.getPeso();
+                break;
+            case 2:
+                marca2 = tel.getMarca();
+                modelo2 = tel.getModelo();
+                color2 = tel.getColor();
+                camaraPrincipal2 = tel.getCamaraPrincipal();
+                camaraFrontal2 = tel.getCamaraFrontal();
+                sistemaOperativo2 = tel.getSistemaOperativo();
+                procesador2 = tel.getProcesador();
+                pantalla2 = tel.getPantalla();
+                almacenamiento2 = tel.getCapacidadAlmacenamiento();
+                memoria2 = tel.getMemoria();
+                precio2 = tel.getPrecio();
+                medidas2 = tel.getMedidas();
+                tipoPlan2 = tel.getTipoPlan();
+                peso2 = tel.getPeso();
+                break;
+            case 3:
+                marca3 = tel.getMarca();
+                modelo3 = tel.getModelo();
+                color3 = tel.getColor();
+                camaraPrincipal3 = tel.getCamaraPrincipal();
+                camaraFrontal3 = tel.getCamaraFrontal();
+                sistemaOperativo3 = tel.getSistemaOperativo();
+                procesador3 = tel.getProcesador();
+                pantalla3 = tel.getPantalla();
+                almacenamiento3 = tel.getCapacidadAlmacenamiento();
+                memoria3 = tel.getMemoria();
+                precio3 = tel.getPrecio();
+                medidas3 = tel.getMedidas();
+                tipoPlan3 = tel.getTipoPlan();
+                peso3 = tel.getPeso();
+                break;
+            case 4:
+                marca4 = tel.getMarca();
+                modelo4 = tel.getModelo();
+                color4 = tel.getColor();
+                camaraPrincipal4 = tel.getCamaraPrincipal();
+                camaraFrontal4 = tel.getCamaraFrontal();
+                sistemaOperativo4 = tel.getSistemaOperativo();
+                procesador4 = tel.getProcesador();
+                pantalla4 = tel.getPantalla();
+                almacenamiento4 = tel.getCapacidadAlmacenamiento();
+                memoria4 = tel.getMemoria();
+                precio4 = tel.getPrecio();
+                medidas4 = tel.getMedidas();
+                tipoPlan4 = tel.getTipoPlan();
+                peso4 = tel.getPeso();
+                break;
+            default:
+                // no-op
+        }
+    }
+
+    /**
+     * Obtiene la cantidad de teléfonos registrados actualmente.
+     * Cuenta cuántos teléfonos tienen modelo no nulo.
+     * 
+     * @return Número de teléfonos registrados (0-5)
+     */
     public static int getCantidadTelefonos() {
         int c = 0;
         if (modelo0 != null) c++;
@@ -295,6 +429,13 @@ public class DatosGlobales {
         return c;
     }
 
+    /**
+     * Agrega un nuevo teléfono a la lista de teléfonos registrados.
+     * Asigna el teléfono al primer slot disponible (modeloX == null).
+     * Si no hay slots disponibles, no hace nada.
+     * 
+     * @param tel Objeto Telefono a agregar
+     */
     public static void agregarTelefono(Telefono tel) {
         if (tel == null) return;
         if (modelo0 == null) {
@@ -314,6 +455,12 @@ public class DatosGlobales {
         }
     }
 
+    /**
+     * Elimina un teléfono de la lista por índice y compacta la lista.
+     * Desplaza todos los teléfonos siguientes hacia arriba para llenar el hueco.
+     * 
+     * @param indice Índice del teléfono a eliminar (0-4)
+     */
     public static void eliminarTelefono(int indice) {
         // Eliminación y compactación: desplazar hacia arriba los teléfonos
         switch (indice) {
@@ -348,12 +495,18 @@ public class DatosGlobales {
         }
     }
 
-    // Procesa una venta y devuelve la boleta formateada
-    // Nota: cuotaDiaria se actualiza automáticamente con cada venta (suma acumulada)
+    /**
+     * Procesa una venta de teléfonos y genera una boleta formateada.
+     * Calcula descuentos, obsequios, actualiza contadores de ventas y acumula el total diario.
+     * 
+     * @param indice Índice del teléfono a vender
+     * @param cantidad Cantidad de unidades a vender
+     * @return Cadena con la boleta formateada o mensaje de error
+     */
     public static String procesarVenta(int indice, int cantidad) {
         Telefono tel = getTelefono(indice);
         if (tel == null) {
-            return "Error: modelo inválido.";
+            return "Error: modelo inv\u00e1lido.";
         }
         if (cantidad <= 0) {
             return "Error: la cantidad debe ser mayor a 0.";

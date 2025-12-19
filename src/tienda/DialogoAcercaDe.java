@@ -12,6 +12,22 @@ import java.awt.*;
 public class DialogoAcercaDe extends JDialog {
     private static final long serialVersionUID = 1L;
     
+    // Componentes para edición gráfica
+    private JPanel panelPrincipal;
+    private JLabel lblTitulo;
+    private JSeparator separador;
+    private JLabel lblAutores;
+    private JLabel lblAutor1;
+    private JLabel lblAutor2;
+    private JLabel lblAutor3;
+    private JLabel lblAutor4;
+    private JLabel lblAutor5;
+    private JButton btnCerrar;
+    
+    /**
+     * Constructor del diálogo Acerca De
+     * @param padre Ventana padre (JFrame principal) para centrar el diálogo
+     */
     public DialogoAcercaDe(JFrame padre) {
         super(padre, "Acerca de Tienda de Celulares", true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -27,71 +43,73 @@ public class DialogoAcercaDe extends JDialog {
         crearComponentes();
     }
     
+    /**
+     * Crea y configura todos los componentes visuales del diálogo
+     */
     private void crearComponentes() {
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(null); // Absolute layout
         panelPrincipal.setBackground(new Color(250, 250, 250));
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
-
+        
         // Título grande centrado
-        JLabel lblTitulo = new JLabel("Tienda de Celulares 1.0");
+        lblTitulo = new JLabel("Tienda de Celulares 1.0");
+        lblTitulo.setForeground(Color.BLUE);
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 36));
-        lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblTitulo.setBounds(50, 20, 400, 40);
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         panelPrincipal.add(lblTitulo);
-
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 12)));
-
+        
         // Línea horizontal azul clara
-        JSeparator separador = new JSeparator();
+        separador = new JSeparator();
         separador.setForeground(new Color(173, 216, 230));
-        separador.setMaximumSize(new Dimension(450, 3));
-        separador.setPreferredSize(new Dimension(450, 3));
+        separador.setBounds(25, 70, 450, 3);
         panelPrincipal.add(separador);
-
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 16)));
-
+        
         // Label "Autores" centrado
-        JLabel lblAutores = new JLabel("Autores:");
+        lblAutores = new JLabel("Autores:");
         lblAutores.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblAutores.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblAutores.setBounds(200, 80, 100, 25);
+        lblAutores.setHorizontalAlignment(SwingConstants.CENTER);
         panelPrincipal.add(lblAutores);
-
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
-
-        // Panel con cada autor en su propio label, centrados
-        JPanel panelNombres = new JPanel();
-        panelNombres.setOpaque(false);
-        panelNombres.setLayout(new BoxLayout(panelNombres, BoxLayout.Y_AXIS));
-        panelNombres.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        String[] autores = new String[] {
-            "Nayeli Bianca Clemente Morales",
-            "Milagros Eugenia Loza Cavero",
-            "Nicole Catherine Paucar Quispe",
-            "Emerson Víctor Aliaga Velán",
-            "Carlos Eduardo Saavedra Alvarado"
-        };
-
-        for (String nombre : autores) {
-            JLabel lbl = new JLabel(nombre);
-            lbl.setFont(new Font("Segoe UI", Font.BOLD, 16));
-            lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelNombres.add(lbl);
-            panelNombres.add(Box.createRigidArea(new Dimension(0, 6)));
-        }
-
-        panelPrincipal.add(panelNombres);
-
-        panelPrincipal.add(Box.createVerticalGlue());
-
+        
+        // Autores
+        lblAutor1 = new JLabel("Nayeli Bianca Clemente Morales");
+        lblAutor1.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblAutor1.setBounds(50, 110, 400, 20);
+        lblAutor1.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(lblAutor1);
+        
+        lblAutor2 = new JLabel("Milagros Eugenia Loza Cavero");
+        lblAutor2.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblAutor2.setBounds(50, 135, 400, 20);
+        lblAutor2.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(lblAutor2);
+        
+        lblAutor3 = new JLabel("Nicole Catherine Paucar Quispe");
+        lblAutor3.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblAutor3.setBounds(50, 160, 400, 20);
+        lblAutor3.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(lblAutor3);
+        
+        lblAutor4 = new JLabel("Emerson V\u00edctor Aliaga Vel\u00e1n");
+        lblAutor4.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblAutor4.setBounds(50, 185, 400, 20);
+        lblAutor4.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(lblAutor4);
+        
+        lblAutor5 = new JLabel("Carlos Eduardo Saavedra Alvarado");
+        lblAutor5.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblAutor5.setBounds(50, 210, 400, 20);
+        lblAutor5.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(lblAutor5);
+        
         // Botón Cerrar centrado
-        JButton btnCerrar = new JButton("Cerrar");
-        btnCerrar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        btnCerrar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnCerrar = new JButton("Cerrar");
+        btnCerrar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnCerrar.setBounds(200, 320, 100, 28);
         btnCerrar.addActionListener(e -> dispose());
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 12)));
         panelPrincipal.add(btnCerrar);
-
+        
         add(panelPrincipal);
     }
 }
